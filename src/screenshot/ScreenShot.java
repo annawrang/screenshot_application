@@ -1,5 +1,9 @@
 package screenshot;
 
+// testa att skriva in fler adresser + stäng ner sidorna efter screen shottet!
+
+// https://www.facebook.com/;https://github.com/annawrang/Screenshot
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -33,11 +37,13 @@ public class ScreenShot {
             outServer.writeObject(session);
         } catch (IOException ex) {
             Logger.getLogger(ScreenShot.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Can't connect to the server."
+                    + " (Start ServerListener first)");
         }
     }
 
     public void getScreenShot(String[] urls) throws URISyntaxException {
-        String imageNames = "The screenshots have been saved. The image names are: ";
+        String imageNames = "The screenshots have been saved as: ";
         try {
             String[] urlList = urls;
             Robot robot = new Robot();
@@ -50,7 +56,7 @@ public class ScreenShot {
 
                 URI uri = new java.net.URI(u);
                 Desktop.getDesktop().browse(uri);
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(3);
                 BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
                 ImageIO.write(screenFullImage, format, new File(fileName));
                 dc.saveImage(fileName, imageCount);

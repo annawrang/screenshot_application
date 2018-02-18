@@ -15,11 +15,11 @@ public class ActionHandler implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == gui.choiceOne){
+        if (e.getSource() == gui.choiceOne) {
             gui.setScreenShotGui();
-        } else if(e.getSource() == gui.choiceTwo){
+        } else if (e.getSource() == gui.choiceTwo) {
             gui.setReturnImageGui();
-        } else if(e.getSource() == gui.getScreenShot) {
+        } else if (e.getSource() == gui.getScreenShot) {
             if (gui.websiteEntry == null) {
                 JOptionPane.showMessageDialog(null, "You have to enter a url.");
             } else {
@@ -33,13 +33,19 @@ public class ActionHandler implements ActionListener {
 
             }
 
-        } else if(e.getSource() == gui.returnImage){
-            if(gui.enterImageName == null){
+        } else if (e.getSource() == gui.returnImage) {
+            if (gui.enterImageName == null) {
                 JOptionPane.showMessageDialog(null, "You have to enter an image name. (For example \"image5.png\")");
-            }else{
+            } else {
                 String in = gui.enterImageName.getText();
                 gui.ss.returnImage(in);
             }
+        } else if (e.getSource() == gui.back1) {
+            gui.setMenuGui();
+        } else if (e.getSource() == gui.back2) {
+            gui.setMenuGui();
+        } else if (e.getSource() == gui.back3) {
+            gui.setReturnImageGui();
         }
     }
 

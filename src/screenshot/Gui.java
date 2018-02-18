@@ -17,24 +17,37 @@ public class Gui extends JFrame {
 
     // gui for return Image
     private JPanel returnImagePanel = new JPanel();
-    private JLabel enterImageLabel = new JLabel("Please enter the image name");
+    private JLabel enterImageLabel = new JLabel("Please enter the image name", SwingConstants.CENTER);
     protected JTextField enterImageName = new JTextField();
     protected JButton returnImage = new JButton("View image");
+    protected JButton back1 = new JButton("Back");
 
     // gui for screenshot
     private JPanel makeScreenShotPanel = new JPanel();
-    private JLabel writeUrl = new JLabel("Please write the url of the website");
+    private JLabel writeUrl = new JLabel("Please write the url of the website", SwingConstants.CENTER);
     protected JTextField websiteEntry = new JTextField();
     protected JButton getScreenShot = new JButton("Get screenshot");
+    protected JButton back2 = new JButton("Back");
 
     // gui for viewing image
     private JPanel viewImagePanel = new JPanel();
-    protected JButton back = new JButton("Back");
+    protected JButton back3 = new JButton("Back");
     private JLabel theImage = new JLabel();
 
     public Gui(ScreenShot ss) {
         this.ss = ss;
         this.ah = new ActionHandler(this);
+        this.setMenuGui();
+        this.setTitle("Screen shot application");
+        this.setVisible(true);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setSmallFrame();
+        this.refresh();
+    }
+
+    public void setMenuGui() {
+        this.remove(makeScreenShotPanel);
+        this.remove(returnImagePanel);
 
         menuPanel.setLayout(new GridLayout(3, 1));
         menuPanel.add(menu);
@@ -43,11 +56,8 @@ public class Gui extends JFrame {
         choiceOne.addActionListener(ah);
         choiceTwo.addActionListener(ah);
         this.add(menuPanel);
+        this.refresh();
 
-        this.setTitle("Screen shot application");
-        this.setVisible(true);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSmallFrame();
     }
 
     public void setScreenShotGui() {
@@ -56,23 +66,29 @@ public class Gui extends JFrame {
         makeScreenShotPanel.add(writeUrl);
         makeScreenShotPanel.add(websiteEntry);
         makeScreenShotPanel.add(getScreenShot);
-
+        makeScreenShotPanel.add(back1);
+        back1.addActionListener(ah);
         getScreenShot.addActionListener(ah);
         this.add(makeScreenShotPanel);
         this.setSmallFrame();
+        this.refresh();
     }
 
     public void setReturnImageGui() {
         this.remove(menuPanel);
+        this.remove(viewImagePanel);
 
-        returnImagePanel.setLayout(new GridLayout(3, 1));
+        returnImagePanel.setLayout(new GridLayout(4, 1));
         returnImagePanel.add(enterImageLabel);
         returnImagePanel.add(enterImageName);
         returnImagePanel.add(returnImage);
+        returnImagePanel.add(back2);
         returnImage.addActionListener(ah);
+        back2.addActionListener(ah);
 
         this.add(returnImagePanel);
         this.setSmallFrame();
+        this.refresh();
     }
 
     public void showImage(BufferedImage im) {
@@ -80,26 +96,28 @@ public class Gui extends JFrame {
 
         JLabel theImage = new JLabel(new ImageIcon(im));
         viewImagePanel.setLayout(new BorderLayout());
-        viewImagePanel.add(back, BorderLayout.NORTH);
+        viewImagePanel.add(back3, BorderLayout.NORTH);
         viewImagePanel.add(theImage, BorderLayout.CENTER);
 
-        back.addActionListener(ah);
+        back3.addActionListener(ah);
 
         this.add(viewImagePanel);
         this.setBigFrame();
+        this.refresh();
     }
 
     public void setSmallFrame() {
         this.setSize(400, 200);
         this.setLocation(800, 600);
-        this.revalidate();
-        this.repaint();
     }
 
     public void setBigFrame() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setLocation(100, 100);
+    }
+
+    public void refresh() {
         this.revalidate();
         this.repaint();
     }

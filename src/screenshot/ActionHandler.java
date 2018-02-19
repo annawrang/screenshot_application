@@ -27,25 +27,19 @@ public class ActionHandler implements ActionListener {
                 String[] urls = userIn.split(";");
                 try {
                     gui.ss.getScreenShot(urls);
+                    gui.dispose();
                 } catch (URISyntaxException ex) {
                     Logger.getLogger(ActionHandler.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
-
         } else if (e.getSource() == gui.returnImage) {
             if (gui.enterImageName == null) {
-                JOptionPane.showMessageDialog(null, "You have to enter an image name. (For example \"image5.png\")");
+                JOptionPane.showMessageDialog(null, 
+                    "You have to enter an image name. (For example \"image5.png\")");
             } else {
                 String in = gui.enterImageName.getText();
                 gui.ss.returnImage(in);
             }
-        } else if (e.getSource() == gui.back1) {
-            gui.setMenuGui();
-        } else if (e.getSource() == gui.back2) {
-            gui.setMenuGui();
-        } else if (e.getSource() == gui.back3) {
-            gui.setReturnImageGui();
         }
     }
 

@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/* Creates the server when a client is connecting */
+
 public class ServerListener extends Thread {
 
     protected int port = 33355;

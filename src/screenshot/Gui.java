@@ -20,18 +20,15 @@ public class Gui extends JFrame {
     private JLabel enterImageLabel = new JLabel("Please enter the image name", SwingConstants.CENTER);
     protected JTextField enterImageName = new JTextField();
     protected JButton returnImage = new JButton("View image");
-    protected JButton back1 = new JButton("Back");
 
     // gui for screenshot
     private JPanel makeScreenShotPanel = new JPanel();
     private JLabel writeUrl = new JLabel("Please write the url of the website", SwingConstants.CENTER);
     protected JTextField websiteEntry = new JTextField();
     protected JButton getScreenShot = new JButton("Get screenshot");
-    protected JButton back2 = new JButton("Back");
 
     // gui for viewing image
     private JPanel viewImagePanel = new JPanel();
-    protected JButton back3 = new JButton("Back");
     private JLabel theImage = new JLabel();
 
     public Gui(ScreenShot ss) {
@@ -62,12 +59,10 @@ public class Gui extends JFrame {
 
     public void setScreenShotGui() {
         this.remove(menuPanel);
-        makeScreenShotPanel.setLayout(new GridLayout(4, 1));
+        makeScreenShotPanel.setLayout(new GridLayout(3, 1));
         makeScreenShotPanel.add(writeUrl);
         makeScreenShotPanel.add(websiteEntry);
         makeScreenShotPanel.add(getScreenShot);
-        makeScreenShotPanel.add(back1);
-        back1.addActionListener(ah);
         getScreenShot.addActionListener(ah);
         this.add(makeScreenShotPanel);
         this.setSmallFrame();
@@ -78,28 +73,23 @@ public class Gui extends JFrame {
         this.remove(menuPanel);
         this.remove(viewImagePanel);
 
-        returnImagePanel.setLayout(new GridLayout(4, 1));
+        returnImagePanel.setLayout(new GridLayout(3, 1));
         returnImagePanel.add(enterImageLabel);
         returnImagePanel.add(enterImageName);
         returnImagePanel.add(returnImage);
-        returnImagePanel.add(back2);
         returnImage.addActionListener(ah);
-        back2.addActionListener(ah);
 
         this.add(returnImagePanel);
         this.setSmallFrame();
         this.refresh();
     }
 
-    public void showImage(BufferedImage im) {
+    public void showImage(ImageIcon im) {
         this.remove(returnImagePanel);
 
-        JLabel theImage = new JLabel(new ImageIcon(im));
+        JLabel theImage = new JLabel(im);
         viewImagePanel.setLayout(new BorderLayout());
-        viewImagePanel.add(back3, BorderLayout.NORTH);
         viewImagePanel.add(theImage, BorderLayout.CENTER);
-
-        back3.addActionListener(ah);
 
         this.add(viewImagePanel);
         this.setBigFrame();

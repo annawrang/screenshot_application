@@ -1,5 +1,6 @@
 package screenshot;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
@@ -7,6 +8,9 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+/*  Where all the communication with the database happens */
 
 public class DatabaseConnection {
 
@@ -57,36 +61,44 @@ public class DatabaseConnection {
         }
     }
 
-    public void saveImage(String imageName, long number) {
+    public void saveImage(ImageIcon ima, String imageName, long number) {
         try (Connection con = DriverManager.getConnection(
                 p.getProperty("ConnectionString"),
                 p.getProperty("username"),
                 p.getProperty("password"))) {
 
-            File image = new File(imageName);
+            BufferedImage buff = new BufferedImage(
+                    ima.getIconWidth(),
+                    ima.getIconHeight(),
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics g = buff.createGraphics();
+            ima.paintIcon(null, g, 0, 0);
+
+            ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+            ImageIO.write(buff, "png", byteArrayOut);
+            byte[] imageInByte = byteArrayOut.toByteArray();
+            Blob blob = con.createBlob();
+            blob.setBytes(1, imageInByte);
             PreparedStatement ps = con.prepareStatement(
                     "Insert into images(image, name, number) values(?,?,?)");
+            ps.setBlob(1, blob);
             ps.setString(2, imageName);
             ps.setLong(3, number);
 
-            FileInputStream fi = new FileInputStream(image);
-            ps.setBinaryStream(1, (InputStream) fi, (int) (image.length()));
-
             int result = ps.executeUpdate();
-            if (result > 0) {
-                System.out.println("Uploaded successfully!");
-            } else {
-                System.out.println("Unsucessful to upload image.");
-            }
+
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public BufferedImage retrieveImage(String imageName) {
+    public ImageIcon retrieveImage(String imageName) {
         BufferedImage im = null;
+        ImageIcon ii = null;
         try (Connection con = DriverManager.getConnection(
                 p.getProperty("ConnectionString"),
                 p.getProperty("username"),
@@ -98,11 +110,11 @@ public class DatabaseConnection {
             while (res.next()) {
                 im = ImageIO.read(res.getBinaryStream(1));
             }
-
+            ii = new ImageIcon(im);
         } catch (SQLException | IOException ex) {
             Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return im;
+        return ii;
     }
 
 }

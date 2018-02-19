@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/* The client that creates a gui and communicates with the server with a
+/*  The client that creates a gui and communicates with the server with a
     session-object. Has methods to get a screenshot or to display a
     screenshot from the database */
 

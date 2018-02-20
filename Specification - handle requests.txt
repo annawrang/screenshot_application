@@ -1,0 +1,10 @@
+To handle up to 1 000 000 requests per day my solution would need to be changed to an API
+that gets screenshots from urls without having to open up a new window (something like 
+Selenium WebDriver).
+The database (which is just a local database now) would be placed on the cloud, maybe
+Amazon Cloud. There might also be a better online service to store the pictures which
+is designed for images.
+The exception handling would need to be much more specific, right now it just covers the 
+very basics.
+The server would also need to be placed somewhere else than on someones personal computer.
+It could also help if the server class was a Thread.

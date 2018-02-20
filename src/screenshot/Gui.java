@@ -24,7 +24,7 @@ public class Gui extends JFrame {
     // gui for screenshot
     private JPanel makeScreenShotPanel = new JPanel();
     private JLabel writeUrl = new JLabel("Please write the url of the website "
-            + "(if list separate with \";\"", SwingConstants.CENTER);
+            + "(if list separate with \";\" )", SwingConstants.CENTER);
     protected JTextField websiteEntry = new JTextField();
     protected JButton getScreenShot = new JButton("Get screenshot");
 

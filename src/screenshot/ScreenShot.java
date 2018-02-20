@@ -36,7 +36,6 @@ public class ScreenShot {
             inServer = new ObjectInputStream(serverSocket.getInputStream());
             session = (Session) inServer.readObject();
             imageCount = session.getImageCount();
-            System.out.println("image count is " + imageCount);
 
         } catch (IOException ex) {
             Logger.getLogger(ScreenShot.class.getName()).log(Level.SEVERE, null, ex);
